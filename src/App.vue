@@ -1,6 +1,6 @@
 <template>
   <div class="myWeather">
-    <button @click="getLocation()">Get my weather</button>
+    <!-- <button @click="getLocation()">Get my weather</button> -->
 
     <table>
       <thead>
@@ -24,7 +24,11 @@
           <td>{{ Weather.temp }}</td>
         </tr>
         <tr>
-          <td>ico</td>
+          <td>
+            <img
+              :src="`https://openweathermap.org/img/wn/${Weather.icon}@2x.png`"
+            />
+          </td>
           <td>main</td>
           <td>{{ Weather.main }}</td>
         </tr>
@@ -40,24 +44,41 @@
         </tr>
       </tbody>
     </table>
+
+    <div class="addCity">
+      <div class="inputCity">
+        <input v-model="cityInput" placeholder="type city" />
+        <button @click="addCity">Add city</button>
+      </div>
+      <!-- <div class="selectCity">
+        <select v-model="selectedCity">
+          <option value="">Select city</option>
+          <option :value="selectedCity">{{ selectedCity }}</option>
+        </select>
+      </div> -->
+    </div>
   </div>
 </template>
 
 <script setup>
-import { computed, onMounted, ref } from "vue";
+import { onMounted, ref } from "vue";
 import axios from "axios";
 
 const city = ref("");
 const country = ref("");
 const latitude = ref("");
 const longitude = ref("");
+const cityInput = ref("");
+const selectedCity = ref("");
 
 const Weather = ref({
+  id: "",
   humidity: "",
   temp: "",
   main: "",
   pressure: "",
   description: "",
+  icon: "",
 });
 
 const getLocation = () => {
@@ -99,8 +120,13 @@ const getWeatherInfo = (position) => {
       Weather.value.main = response.data.weather[0].description;
       Weather.value.pressure = response.data.main.pressure;
       Weather.value.description = response.data.weather[0].description;
+      Weather.value.icon = response.data.weather[0].icon;
+      Weather.value.id = response.data.weather[0].id;
     });
 };
+const addCity = () =>{
+  
+}
 onMounted(() => {
   getLocation();
   getWeatherInfo();
