@@ -50,12 +50,22 @@
         <input v-model="cityInput" placeholder="type city" />
         <button @click="addCity(cityInput)">Add city</button>
       </div>
-      <!-- <div class="selectCity">
+
+      <div class="selectedCity">
         <select v-model="selectedCity">
           <option value="">Select city</option>
-          <option :value="selectedCity">{{ selectedCity }}</option>
+          <option
+            v-for="selectedCity in cities"
+            :key="selectedCity"
+            :value="selectedCity"
+          >
+            {{ selectedCity }}
+          </option>
         </select>
-      </div> -->
+        <router-link v-bind:to="'/weather-info/' + Weather.id">
+          <button>Select city</button>
+        </router-link>
+      </div>
     </div>
   </div>
 </template>
@@ -70,6 +80,7 @@ const latitude = ref("");
 const longitude = ref("");
 const cityInput = ref("");
 const cities = ref([]);
+const selectedCity = ref("");
 
 const Weather = ref({
   id: "",
