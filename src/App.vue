@@ -5,10 +5,10 @@
     <table>
       <thead>
         <td>
-          {{ city }}
+          {{ cityCurrent }}
         </td>
         <td>
-          {{ country }}
+          {{ countryCurrent }}
         </td>
         <td>[{{ latitude }}; {{ longitude }}]</td>
       </thead>
@@ -48,7 +48,7 @@
     <div class="addCity">
       <div class="inputCity">
         <input v-model="cityInput" placeholder="type city" />
-        <button @click="addCity">Add city</button>
+        <button @click="addCity(cityInput)">Add city</button>
       </div>
       <!-- <div class="selectCity">
         <select v-model="selectedCity">
@@ -64,12 +64,12 @@
 import { onMounted, ref } from "vue";
 import axios from "axios";
 
-const city = ref("");
-const country = ref("");
+const cityCurrent = ref("");
+const countryCurrent = ref("");
 const latitude = ref("");
 const longitude = ref("");
 const cityInput = ref("");
-const selectedCity = ref("");
+const cities = ref([]);
 
 const Weather = ref({
   id: "",
@@ -97,39 +97,50 @@ const showPosition = (position) => {
       `https://us1.locationiq.com/v1/reverse?lat=${latitude.value}&lon=${longitude.value}&format=json&key=pk.dfc77c3e733a06fba2855876c491f105`
     )
     .then((response) => {
-      city.value = response.data.address.city;
-      country.value = response.data.address.country;
-      console.log(city.value);
-      console.log(country.value);
+      cityCurrent.value = response.data.address.city;
+      countryCurrent.value = response.data.address.country;
+      console.log(cityCurrent.value);
+      console.log(countryCurrent.value);
 
       getWeatherInfo(position);
     })
     .catch((error) => console.log("Міста не знайдено", error));
 };
 const getWeatherInfo = (position) => {
-  latitude.value = position.coords.latitude;
-  longitude.value = position.coords.longitude;
-
-  axios
-    .get(
-      `https://api.openweathermap.org/data/2.5/weather?lat=${latitude.value}&lon=${longitude.value}&appid=7914d5a440960cfd5df3bd0388a7ad0f`
-    )
-    .then((response) => {
-      Weather.value.humidity = response.data.main.humidity;
-      Weather.value.temp = response.data.main.temp;
-      Weather.value.main = response.data.weather[0].description;
-      Weather.value.pressure = response.data.main.pressure;
-      Weather.value.description = response.data.weather[0].description;
-      Weather.value.icon = response.data.weather[0].icon;
-      Weather.value.id = response.data.weather[0].id;
-    });
+  latitude.value = position?.coords.latitude;
+  longitude.value = position?.coords.longitude;
+  if (latitude.value && longitude.value) {
+    axios
+      .get(
+        `https://api.openweathermap.org/data/2.5/weather?lat=${latitude.value}&lon=${longitude.value}&appid=7914d5a440960cfd5df3bd0388a7ad0f`
+      )
+      .then((response) => {
+        Weather.value.humidity = response.data.main.humidity;
+        Weather.value.temp = response.data.main.temp;
+        Weather.value.main = response.data.weather[0].description;
+        Weather.value.pressure = response.data.main.pressure;
+        Weather.value.description = response.data.weather[0].description;
+        Weather.value.icon = response.data.weather[0].icon;
+        Weather.value.id = response.data.weather[0].id;
+      });
+  }
 };
-const addCity = () =>{
-  
-}
+const addCity = (city) => {
+  cities.value.push(city);
+  localStorage.setItem("cities", JSON.stringify(cities.value));
+  console.log(cities.value);
+  // alert(JSON.stringify(cities.value));
+
+  cityInput.value = "";
+};
 onMounted(() => {
   getLocation();
   getWeatherInfo();
+
+  const storedCities = JSON.parse(localStorage.getItem("cities")) || [];
+  cities.value = storedCities;
+  console.log(storedCities, cities.value);
+  // alert(JSON.stringify(cities.value));
 });
 </script>
 <style scoped></style>
