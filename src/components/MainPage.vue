@@ -54,16 +54,12 @@
       <div class="selectedCity">
         <select v-model="selectedCity">
           <option value="">Select city</option>
-          <option
-            v-for="selectedCity in cities"
-            :key="selectedCity"
-            :value="selectedCity"
-          >
-            {{ selectedCity }}
+          <option v-for="(city, index) in cities" :key="index" :value="city">
+            {{ city }}
           </option>
         </select>
-        <router-link v-bind:to="'/weather-info/' + Weather.id">
-          <button>Select city</button>
+        <router-link v-bind:to="'/weather-info/' + selectedCity">
+          <button @click="selectCity">Select city</button>
         </router-link>
       </div>
     </div>
@@ -71,7 +67,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import axios from "axios";
 
 const cityCurrent = ref("");
@@ -139,11 +135,12 @@ const getWeatherInfo = (position) => {
 const addCity = (city) => {
   cities.value.push(city);
   localStorage.setItem("cities", JSON.stringify(cities.value));
-  console.log(cities.value);
+  console.log("Cities value", cities.value);
   // alert(JSON.stringify(cities.value));
 
   cityInput.value = "";
 };
+
 onMounted(() => {
   getLocation();
   getWeatherInfo();
@@ -151,6 +148,7 @@ onMounted(() => {
   const storedCities = JSON.parse(localStorage.getItem("cities")) || [];
   cities.value = storedCities;
   console.log(storedCities, cities.value);
+
   // alert(JSON.stringify(cities.value));
 });
 </script>
