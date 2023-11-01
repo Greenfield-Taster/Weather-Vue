@@ -1,8 +1,47 @@
 <template>
-  <div>
-    {{ props.id }}
-    [{{ selectedCity.latitude }}; {{ selectedCity.longitude }}]
-    {{ selectedCity.description }}
+  <div class="currentWeatherTable">
+    <table>
+      <thead>
+        <td>
+          {{ props.id }}
+        </td>
+        <td>
+          {{ countryCurrent }}
+        </td>
+        <td>[{{ selectedCity.latitude }}; {{ selectedCity.longitude }}]</td>
+      </thead>
+      <tbody>
+        <tr>
+          <td>ico</td>
+          <td>humidity</td>
+          <td>{{ selectedCity.humidity }}</td>
+        </tr>
+        <tr>
+          <td>ico</td>
+          <td>temp</td>
+          <td>{{ selectedCity.temp }}</td>
+        </tr>
+        <tr>
+          <td>
+            <img
+              :src="`https://openweathermap.org/img/wn/${selectedCity.icon}@2x.png`"
+            />
+          </td>
+          <td>main</td>
+          <td>{{ selectedCity.main }}</td>
+        </tr>
+        <tr>
+          <td>ico</td>
+          <td>pressure</td>
+          <td>{{ selectedCity.pressure }}</td>
+        </tr>
+        <tr>
+          <td>ico</td>
+          <td>description</td>
+          <td>{{ selectedCity.description }}</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 <script setup>

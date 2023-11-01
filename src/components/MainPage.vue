@@ -1,54 +1,16 @@
 <template>
-  <div class="myWeather">
-    <!-- <button @click="getLocation()">Get my weather</button> -->
-
-    <table>
-      <thead>
-        <td>
-          {{ cityCurrent }}
-        </td>
-        <td>
-          {{ countryCurrent }}
-        </td>
-        <td>[{{ latitude }}; {{ longitude }}]</td>
-      </thead>
-      <tbody>
-        <tr>
-          <td>ico</td>
-          <td>humidity</td>
-          <td>{{ Weather.humidity }}</td>
-        </tr>
-        <tr>
-          <td>ico</td>
-          <td>temp</td>
-          <td>{{ Weather.temp }}</td>
-        </tr>
-        <tr>
-          <td>
-            <img
-              :src="`https://openweathermap.org/img/wn/${Weather.icon}@2x.png`"
-            />
-          </td>
-          <td>main</td>
-          <td>{{ Weather.main }}</td>
-        </tr>
-        <tr>
-          <td>ico</td>
-          <td>pressure</td>
-          <td>{{ Weather.pressure }}</td>
-        </tr>
-        <tr>
-          <td>ico</td>
-          <td>description</td>
-          <td>{{ Weather.description }}</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <div class="addCity">
+  <div class="wrapper">
+    <div class="addCityBlock">
       <div class="inputCity">
-        <input v-model="cityInput" placeholder="type city" />
-        <button @click="addCity(cityInput)">Add city</button>
+        <div class="input-container">
+          <input
+            class="input-field"
+            v-model="cityInput"
+            placeholder="type city"
+          />
+          <img @click="clearInput" src="../assets/iconsCancel.png" />
+        </div>
+        <button class="action" @click="addCity(cityInput)">Add city</button>
       </div>
 
       <div class="selectedCity">
@@ -59,9 +21,53 @@
           </option>
         </select>
         <router-link v-bind:to="'/weather-info/' + selectedCity">
-          <button @click="selectCity">Select city</button>
+          <button class="action" @click="selectCity">Select city</button>
         </router-link>
       </div>
+    </div>
+    <div class="currentWeatherTable">
+      <table>
+        <thead>
+          <td>
+            {{ cityCurrent }}
+          </td>
+          <td>
+            {{ countryCurrent }}
+          </td>
+          <td>[{{ latitude }}; {{ longitude }}]</td>
+        </thead>
+        <tbody>
+          <tr>
+            <td>ico</td>
+            <td>humidity</td>
+            <td>{{ Weather.humidity }}</td>
+          </tr>
+          <tr>
+            <td>ico</td>
+            <td>temp</td>
+            <td>{{ Weather.temp }}</td>
+          </tr>
+          <tr>
+            <td>
+              <img
+                :src="`https://openweathermap.org/img/wn/${Weather.icon}@2x.png`"
+              />
+            </td>
+            <td>main</td>
+            <td>{{ Weather.main }}</td>
+          </tr>
+          <tr>
+            <td>ico</td>
+            <td>pressure</td>
+            <td>{{ Weather.pressure }}</td>
+          </tr>
+          <tr>
+            <td>ico</td>
+            <td>description</td>
+            <td>{{ Weather.description }}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </template>
@@ -140,6 +146,9 @@ const addCity = (city) => {
 
   cityInput.value = "";
 };
+const clearInput = () => {
+  cityInput.value = "";
+};
 
 onMounted(() => {
   getLocation();
@@ -152,4 +161,93 @@ onMounted(() => {
   // alert(JSON.stringify(cities.value));
 });
 </script>
-<style scoped></style>
+<style scoped>
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10em;
+  padding: 10px;
+}
+.currentWeatherTable {
+  background-color: rgba(169, 169, 169, 0.5);
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+.addCityBlock {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+
+  background-color: rgba(169, 169, 169, 0.5);
+  width: 60%;
+  height: auto;
+  border-radius: 10px;
+  padding: 30px 0;
+}
+.inputCity {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+.inputCity input {
+  background-color: rgba(200, 200, 200, 0.7);
+  border: none;
+  border-radius: 5px;
+  color: white;
+  outline: none;
+  height: 30px;
+  font-size: 14px;
+}
+.input-container {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+.input-field {
+  background-color: rgba(200, 200, 200, 0.7);
+  color: black;
+  padding: 10px;
+  border: none;
+  width: 100%;
+}
+.input-container img {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  cursor: pointer;
+}
+.selectedCity {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+.selectedCity select {
+  cursor: pointer;
+  border-radius: 5px;
+  border: none;
+  background-color: rgba(200, 200, 200, 0.7);
+  color: rgb(255, 255, 255);
+  height: 30px;
+  font-size: 14px;
+  outline: none;
+}
+.action {
+  width: 200px;
+  height: 40px;
+  cursor: pointer;
+  border-radius: 5px;
+  border: none;
+  background-color: rgba(200, 200, 200, 0.7);
+  color: white;
+  font-size: 17px;
+}
+.action:hover {
+  background-color: rgba(200, 200, 200, 1);
+}
+</style>

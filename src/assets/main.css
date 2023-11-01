@@ -5,12 +5,32 @@
   margin: 0 auto;
   padding: 2rem;
 
-  font-weight: normal;
+  font-family: "Poppins", sans-serif;
+}
+body {
+  background-image: url("./background.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  backdrop-filter: blur(2px);
+  font-family: "Poppins", sans-serif;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  color: white;
 }
 
-a,
-.green {
-  text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
+td {
+  padding: 20px 10px;
+  text-align: center;
+}
+td img {
+  display: block;
+  margin: 0 auto;
+}
+.currentWeatherTable {
+  background-color: rgba(169, 169, 169, 0.5);
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
 }
