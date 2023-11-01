@@ -1,47 +1,62 @@
 <template>
-  <div class="currentWeatherTable">
-    <table>
-      <thead>
-        <td>
-          {{ props.id }}
-        </td>
-        <td>
-          {{ countryCurrent }}
-        </td>
-        <td>[{{ selectedCity.latitude }}; {{ selectedCity.longitude }}]</td>
-      </thead>
-      <tbody>
-        <tr>
-          <td>ico</td>
-          <td>humidity</td>
-          <td>{{ selectedCity.humidity }}</td>
-        </tr>
-        <tr>
-          <td>ico</td>
-          <td>temp</td>
-          <td>{{ selectedCity.temp }}</td>
-        </tr>
-        <tr>
+  <div class="wrapper">
+    <div class="currentWeatherTable">
+      <table>
+        <thead>
           <td>
             <img
-              :src="`https://openweathermap.org/img/wn/${selectedCity.icon}@2x.png`"
+              :src="`https://flagsapi.com/${selectedCity.country}/flat/64.png`"
             />
           </td>
-          <td>main</td>
-          <td>{{ selectedCity.main }}</td>
-        </tr>
-        <tr>
-          <td>ico</td>
-          <td>pressure</td>
-          <td>{{ selectedCity.pressure }}</td>
-        </tr>
-        <tr>
-          <td>ico</td>
-          <td>description</td>
-          <td>{{ selectedCity.description }}</td>
-        </tr>
-      </tbody>
-    </table>
+          <td>
+            {{ props.id }}
+          </td>
+          <td>
+            {{ selectedCity.country }}
+          </td>
+          <!-- <td>[{{ selectedCity.latitude }}; {{ selectedCity.longitude }}]</td> -->
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <img src="../assets/iconsHumidity.png" />
+            </td>
+            <td>humidity</td>
+            <td>{{ selectedCity.humidity }}</td>
+          </tr>
+          <tr>
+            <td>
+              <img src="../assets/iconsTemp.png" />
+            </td>
+            <td>temp</td>
+            <td>{{ selectedCity.temp }}</td>
+          </tr>
+          <tr>
+            <td>
+              <img
+                :src="`https://openweathermap.org/img/wn/${selectedCity.icon}@2x.png`"
+              />
+            </td>
+            <td>main</td>
+            <td>{{ selectedCity.main }}</td>
+          </tr>
+          <tr>
+            <td>
+              <img src="../assets/iconsPressure.png" />
+            </td>
+            <td>pressure</td>
+            <td>{{ selectedCity.pressure }}</td>
+          </tr>
+          <tr>
+            <td>
+              <img src="../assets/iconsWind.png" />
+            </td>
+            <td>wind</td>
+            <td>{{ selectedCity.wind }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>
 <script setup>
@@ -51,6 +66,7 @@ import axios from "axios";
 const cities = ref([]);
 const selectedCity = ref({
   id: "",
+  countryId: "",
   humidity: "",
   temp: "",
   main: "",
@@ -59,6 +75,8 @@ const selectedCity = ref({
   icon: "",
   latitude: "",
   longitude: "",
+  country: "",
+  wind: "",
 });
 
 const props = defineProps(["id"]);
@@ -78,10 +96,16 @@ onMounted(() => {
       selectedCity.value.icon = response.data.weather[0].icon;
       selectedCity.value.latitude = response.data.coord.lat;
       selectedCity.value.longitude = response.data.coord.lon;
+      selectedCity.value.country = response.data.sys.country;
+      selectedCity.value.wind = response.data.wind.speed;
     });
 
   const storedCities = JSON.parse(localStorage.getItem("cities")) || [];
   cities.value = storedCities;
 });
 </script>
-<style scoped></style>
+<style scoped>
+img {
+  width: 40px;
+}
+</style>

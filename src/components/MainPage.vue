@@ -29,21 +29,30 @@
       <table>
         <thead>
           <td>
+            <img
+              :src="`https://flagsapi.com/${Weather.countryId}/flat/64.png`"
+            />
+          </td>
+          <td>
             {{ cityCurrent }}
           </td>
           <td>
             {{ countryCurrent }}
           </td>
-          <td>[{{ latitude }}; {{ longitude }}]</td>
+          <!-- <td>[{{ latitude }}; {{ longitude }}]</td> -->
         </thead>
         <tbody>
           <tr>
-            <td>ico</td>
+            <td>
+              <img src="../assets/iconsHumidity.png" />
+            </td>
             <td>humidity</td>
             <td>{{ Weather.humidity }}</td>
           </tr>
           <tr>
-            <td>ico</td>
+            <td>
+              <img src="../assets/iconsTemp.png" />
+            </td>
             <td>temp</td>
             <td>{{ Weather.temp }}</td>
           </tr>
@@ -57,14 +66,18 @@
             <td>{{ Weather.main }}</td>
           </tr>
           <tr>
-            <td>ico</td>
+            <td>
+              <img src="../assets/iconsPressure.png" />
+            </td>
             <td>pressure</td>
             <td>{{ Weather.pressure }}</td>
           </tr>
           <tr>
-            <td>ico</td>
-            <td>description</td>
-            <td>{{ Weather.description }}</td>
+            <td>
+              <img src="../assets/iconsWind.png" />
+            </td>
+            <td>wind</td>
+            <td>{{ Weather.wind }}</td>
           </tr>
         </tbody>
       </table>
@@ -90,8 +103,9 @@ const Weather = ref({
   temp: "",
   main: "",
   pressure: "",
-  description: "",
+  wind: "",
   icon: "",
+  countryId: "",
 });
 
 const getLocation = () => {
@@ -132,9 +146,10 @@ const getWeatherInfo = (position) => {
         Weather.value.temp = response.data.main.temp;
         Weather.value.main = response.data.weather[0].description;
         Weather.value.pressure = response.data.main.pressure;
-        Weather.value.description = response.data.weather[0].description;
         Weather.value.icon = response.data.weather[0].icon;
         Weather.value.id = response.data.weather[0].id;
+        Weather.value.wind = response.data.wind.speed;
+        Weather.value.countryId = response.data.sys.country;
       });
   }
 };
@@ -249,5 +264,8 @@ onMounted(() => {
 }
 .action:hover {
   background-color: rgba(200, 200, 200, 1);
+}
+img {
+  width: 40px;
 }
 </style>
