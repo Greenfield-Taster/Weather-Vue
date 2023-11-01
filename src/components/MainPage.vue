@@ -54,7 +54,7 @@
               <img src="../assets/iconsTemp.png" />
             </td>
             <td>temp</td>
-            <td>{{ Weather.temp }}</td>
+            <td>{{ tempCelsius }} °C = {{ Weather.temp }} K</td>
           </tr>
           <tr>
             <td>
@@ -107,6 +107,7 @@ const Weather = ref({
   icon: "",
   countryId: "",
 });
+const tempCelsius = ref("");
 
 const getLocation = () => {
   if ("geolocation" in navigator) {
@@ -150,6 +151,8 @@ const getWeatherInfo = (position) => {
         Weather.value.id = response.data.weather[0].id;
         Weather.value.wind = response.data.wind.speed;
         Weather.value.countryId = response.data.sys.country;
+
+        tempCelsius.value = (Weather.value.temp - 273.15).toFixed(2);
       });
   }
 };

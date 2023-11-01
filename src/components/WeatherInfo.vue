@@ -29,7 +29,7 @@
               <img src="../assets/iconsTemp.png" />
             </td>
             <td>temp</td>
-            <td>{{ selectedCity.temp }}</td>
+            <td>{{ tempCelsius }} °C = {{ selectedCity.temp }} K</td>
           </tr>
           <tr>
             <td>
@@ -79,6 +79,8 @@ const selectedCity = ref({
   wind: "",
 });
 
+const tempCelsius = ref("");
+
 const props = defineProps(["id"]);
 
 onMounted(() => {
@@ -98,6 +100,8 @@ onMounted(() => {
       selectedCity.value.longitude = response.data.coord.lon;
       selectedCity.value.country = response.data.sys.country;
       selectedCity.value.wind = response.data.wind.speed;
+
+      tempCelsius.value = (selectedCity.value.temp - 273.15).toFixed(2);
     });
 
   const storedCities = JSON.parse(localStorage.getItem("cities")) || [];
