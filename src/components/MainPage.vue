@@ -140,7 +140,7 @@ const getWeatherInfo = (position) => {
   if (latitude.value && longitude.value) {
     axios
       .get(
-        `https://api.openweathermap.org/data/2.5/weather?lat=${latitude.value}&lon=${longitude.value}&appid=7914d5a440960cfd5df3bd0388a7ad0f`
+        `https://api.openweathermap.org/data/2.5/weather?lat=${latitude.value}&lon=${longitude.value}&appid=dfa005455b567aa3e83b16a666d56b88`
       )
       .then((response) => {
         Weather.value.humidity = response.data.main.humidity;

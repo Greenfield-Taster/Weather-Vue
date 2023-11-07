@@ -1,7 +1,7 @@
 {
   "name": "vue-weather",
   "version": "0.0.0",
-  "homepage": "https://Greenfield-Taster.github.io/Weather-Vue",
+  "homepage": "https://greenfield-taster.github.io/Weather-Vue/",
   "private": true,
   "scripts": {
     "dev": "vite",

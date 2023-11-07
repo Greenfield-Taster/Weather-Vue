@@ -86,7 +86,7 @@ const props = defineProps(["id"]);
 onMounted(() => {
   axios
     .get(
-      `https://api.openweathermap.org/data/2.5/weather?q=${props.id}&appid=7914d5a440960cfd5df3bd0388a7ad0f`
+      `https://api.openweathermap.org/data/2.5/weather?q=${props.id}&appid=dfa005455b567aa3e83b16a666d56b88`
     )
     .then((response) => {
       console.log(response);
