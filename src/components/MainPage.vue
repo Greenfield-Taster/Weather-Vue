@@ -132,7 +132,7 @@ const showPosition = (position) => {
 
       getWeatherInfo(position);
     })
-    .catch((error) => console.log("Міста не знайдено", error));
+    .catch((error) => console.log("Міста не знайдено(!)", error));
 };
 const getWeatherInfo = (position) => {
   latitude.value = position?.coords.latitude;
