@@ -12,7 +12,7 @@ const routes = [
   { path: "/weather-info/:id", component: WeatherInfo, props: true },
 ];
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes,
 });
 createApp(App).use(router).mount("#app");
