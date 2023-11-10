@@ -10,7 +10,16 @@
           />
           <img @click="clearInput" src="../assets/iconsCancel.png" />
         </div>
-        <button class="action" @click="addCity(cityInput)">Add city</button>
+        <div class="typeCityAction">
+          <div class="buttonCheck">
+            <router-link v-bind:to="'/weather-info/' + cityInput">
+              <button class="action" @click="selectCity">Check weather</button>
+            </router-link>
+          </div>
+          <button class="action buttonAdd" @click="addCity(cityInput)">
+            Add
+          </button>
+        </div>
       </div>
 
       <div class="selectedCity">
@@ -210,6 +219,7 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   gap: 1em;
+  width: 45%;
 }
 .inputCity input {
   background-color: rgba(200, 200, 200, 0.7);
@@ -244,6 +254,7 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   gap: 1em;
+  width: 45%;
 }
 .selectedCity select {
   cursor: pointer;
@@ -256,7 +267,8 @@ onMounted(() => {
   outline: none;
 }
 .action {
-  width: 200px;
+  /* width: 200px; */
+  width: 100%;
   height: 40px;
   cursor: pointer;
   border-radius: 5px;
@@ -270,5 +282,16 @@ onMounted(() => {
 }
 img {
   width: 40px;
+}
+.typeCityAction {
+  width: 100%;
+  display: flex;
+}
+.buttonCheck {
+  flex: 0 0 calc(80% - 5px);
+  margin-right: 10px;
+}
+.buttonAdd {
+  flex: 0 0 calc(20% - 5px);
 }
 </style>
