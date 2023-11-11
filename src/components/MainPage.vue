@@ -6,9 +6,19 @@
           <input
             class="input-field"
             v-model="cityInput"
+            @input="onInput"
             placeholder="type city"
           />
           <img @click="clearInput" src="../assets/iconsCancel.png" />
+          <ul v-if="showSuggestions">
+            <li
+              v-for="city in filtredCities"
+              :key="city"
+              @mousedown="selectFiltredCity(city)"
+            >
+              {{ city }}
+            </li>
+          </ul>
         </div>
         <div class="typeCityAction">
           <div class="buttonCheck">
@@ -63,7 +73,7 @@
               <img src="../assets/iconsTemp.png" />
             </td>
             <td>temp</td>
-            <td>{{ tempCelsius }} °C = {{ Weather.temp }} K</td>
+            <td>{{ tempCelsius }} °C</td>
           </tr>
           <tr>
             <td>
@@ -105,6 +115,8 @@ const longitude = ref("");
 const cityInput = ref("");
 const cities = ref([]);
 const selectedCity = ref("");
+const citiesList = ref([]);
+const showSuggestions = ref(false);
 
 const Weather = ref({
   id: "",
@@ -165,6 +177,22 @@ const getWeatherInfo = (position) => {
       });
   }
 };
+const getAllCities = () => {
+  axios
+    .get("https://restcountries.com/v3.1/all")
+    .then((response) => {
+      // console.log(response.data);
+      citiesList.value = response.data
+        .filter((country) => country.capital)
+        .map((country) => country.capital[0]);
+
+      console.log("CitiesList:", citiesList.value);
+    })
+    .catch((error) => {
+      console.error("Error of getting cities:", error);
+    });
+};
+
 const addCity = (city) => {
   cities.value.push(city);
   localStorage.setItem("cities", JSON.stringify(cities.value));
@@ -175,6 +203,19 @@ const addCity = (city) => {
 };
 const clearInput = () => {
   cityInput.value = "";
+  showSuggestions.value = false;
+};
+const filtredCities = computed(() => {
+  return citiesList.value.filter((city) =>
+    city.toLowerCase().startsWith(cityInput.value.toLowerCase())
+  );
+});
+const selectFiltredCity = (selectedCity) => {
+  cityInput.value = selectedCity;
+  showSuggestions.value = false;
+};
+const onInput = () => {
+  showSuggestions.value = cityInput.value.length >= 2;
 };
 
 onMounted(() => {
@@ -183,9 +224,9 @@ onMounted(() => {
 
   const storedCities = JSON.parse(localStorage.getItem("cities")) || [];
   cities.value = storedCities;
-  console.log(storedCities, cities.value);
+  console.log("Cities in storage", storedCities, cities.value);
 
-  // alert(JSON.stringify(cities.value));
+  getAllCities();
 });
 </script>
 <style scoped>
@@ -230,16 +271,16 @@ onMounted(() => {
   height: 30px;
   font-size: 14px;
 }
-.input-container {
-  position: relative;
-  display: inline-block;
-  width: 100%;
-}
 .input-field {
   background-color: rgba(200, 200, 200, 0.7);
   color: black;
   padding: 10px;
   border: none;
+  width: 100%;
+}
+.input-container {
+  position: relative;
+  display: inline-block;
   width: 100%;
 }
 .input-container img {
@@ -249,6 +290,27 @@ onMounted(() => {
   transform: translateY(-50%);
   width: 20px;
   cursor: pointer;
+}
+.input-container ul {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background-color: rgba(83, 83, 83, 0.9);
+  border-radius: 5px;
+  padding: 15px 10px;
+  box-sizing: border-box;
+  z-index: 1;
+}
+.input-container ul li {
+  list-style: none;
+  border-radius: 5px;
+  padding: 15px 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.input-container ul li:hover {
+  background-color: rgba(0, 0, 0, 0.7);
 }
 .selectedCity {
   display: flex;

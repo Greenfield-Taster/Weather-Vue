@@ -29,7 +29,7 @@
               <img src="../assets/iconsTemp.png" />
             </td>
             <td>temp</td>
-            <td>{{ tempCelsius }} °C = {{ selectedCity.temp }} K</td>
+            <td>{{ tempCelsius }} °C</td>
           </tr>
           <tr>
             <td>
