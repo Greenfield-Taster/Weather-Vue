@@ -34,9 +34,10 @@
 
       <div class="selectedCity">
         <select v-model="selectedCity">
-          <option value="">Select city</option>
-          <option v-for="(city, index) in cities" :key="index" :value="city">
+          <option value="" disabled>Select city</option>
+          <option v-for="(city, index) in cities" :key="index">
             {{ city }}
+            <!-- <span @click="deleteCity(index)" class="delete-button"> х </span> -->
           </option>
         </select>
         <router-link v-bind:to="'/weather-info/' + selectedCity">
@@ -44,6 +45,7 @@
         </router-link>
       </div>
     </div>
+
     <div class="currentWeatherTable">
       <table>
         <thead>
@@ -117,6 +119,7 @@ const cities = ref([]);
 const selectedCity = ref("");
 const citiesList = ref([]);
 const showSuggestions = ref(false);
+const storedCities = ref("");
 
 const Weather = ref({
   id: "",
@@ -194,12 +197,16 @@ const getAllCities = () => {
 };
 
 const addCity = (city) => {
-  cities.value.push(city);
-  localStorage.setItem("cities", JSON.stringify(cities.value));
-  console.log("Cities value", cities.value);
-  // alert(JSON.stringify(cities.value));
+  if (JSON.stringify(cities.value).length <= 5) {
+    cities.value.push(city);
+    localStorage.setItem("cities", JSON.stringify(cities.value));
+    console.log("Cities value", cities.value);
+    alert(JSON.stringify(cities.value));
 
-  cityInput.value = "";
+    cityInput.value = "";
+  } else {
+    alert("You can only have up to 5 cities");
+  }
 };
 const clearInput = () => {
   cityInput.value = "";
@@ -217,14 +224,24 @@ const selectFiltredCity = (selectedCity) => {
 const onInput = () => {
   showSuggestions.value = cityInput.value.length >= 2;
 };
+const deleteCity = (index) => {
+  const storedCities = JSON.parse(localStorage.getItem("cities")) || [];
+  storedCities.splice(index, 1);
+  localStorage.setItem("cities", JSON.stringify(storedCities));
+
+  cities.value.splice(index, 1);
+  selectedCity.value = "";
+
+  alert("deleted");
+};
 
 onMounted(() => {
   getLocation();
   getWeatherInfo();
 
-  const storedCities = JSON.parse(localStorage.getItem("cities")) || [];
-  cities.value = storedCities;
-  console.log("Cities in storage", storedCities, cities.value);
+  storedCities.value = JSON.parse(localStorage.getItem("cities")) || [];
+  cities.value = storedCities.value;
+  console.log("Cities in storage", storedCities.value);
 
   getAllCities();
 });
@@ -301,6 +318,8 @@ onMounted(() => {
   padding: 15px 10px;
   box-sizing: border-box;
   z-index: 1;
+  max-height: 20em; /* Set the maximum height for the dropdown */
+  overflow-y: auto; /* Enable vertical scrollbar if needed */
 }
 .input-container ul li {
   list-style: none;
