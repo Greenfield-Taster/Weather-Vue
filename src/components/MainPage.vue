@@ -46,7 +46,7 @@
       </div>
     </div>
 
-    <div class="currentWeatherTable">
+    <!-- <div class="currentWeatherTable">
       <table>
         <thead>
           <td>
@@ -60,7 +60,6 @@
           <td>
             {{ countryCurrent }}
           </td>
-          <!-- <td>[{{ latitude }}; {{ longitude }}]</td> -->
         </thead>
         <tbody>
           <tr>
@@ -102,13 +101,16 @@
           </tr>
         </tbody>
       </table>
-    </div>
+    </div> -->
+
+    <MyChart />
   </div>
 </template>
 
 <script setup>
 import { computed, onMounted, ref } from "vue";
 import axios from "axios";
+import MyChart from "./Chart.vue";
 
 const cityCurrent = ref("");
 const countryCurrent = ref("");

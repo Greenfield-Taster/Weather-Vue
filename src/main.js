@@ -8,7 +8,7 @@ import MainPage from "./components/MainPage.vue";
 import WeatherInfo from "./components/WeatherInfo.vue";
 
 const routes = [
-  { path: "/", component: MainPage },
+  { path: "/", component: MainPage, props: true },
   { path: "/weather-info/:id", component: WeatherInfo, props: true },
 ];
 const router = createRouter({
