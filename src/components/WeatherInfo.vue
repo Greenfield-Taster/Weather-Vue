@@ -101,7 +101,7 @@ onMounted(() => {
       selectedCity.value.country = response.data.sys.country;
       selectedCity.value.wind = response.data.wind.speed;
 
-      tempCelsius.value = (selectedCity.value.temp - 273.15).toFixed(2);
+      tempCelsius.value = (selectedCity.value.temp - 273.15).toFixed(0);
     });
 
   const storedCities = JSON.parse(localStorage.getItem("cities")) || [];

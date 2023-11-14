@@ -176,7 +176,7 @@ const getWeatherInfo = (position) => {
         Weather.value.wind = response.data.wind.speed;
         Weather.value.countryId = response.data.sys.country;
 
-        tempCelsius.value = (Weather.value.temp - 273.15).toFixed(2);
+        tempCelsius.value = (Weather.value.temp - 273.15).toFixed(0);
       });
   }
 };
@@ -247,21 +247,6 @@ onMounted(() => {
 });
 </script>
 <style scoped>
-.wrapper {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 10em;
-  padding: 10px;
-}
-.currentWeatherTable {
-  background-color: rgba(169, 169, 169, 0.5);
-  width: 100%;
-  height: auto;
-  border-radius: 10px;
-}
-
 .addCityBlock {
   display: flex;
   flex-direction: row;

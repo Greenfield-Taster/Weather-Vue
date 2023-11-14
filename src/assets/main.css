@@ -34,3 +34,17 @@ td img {
   height: auto;
   border-radius: 10px;
 }
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10em;
+  padding: 10px;
+}
+.currentWeatherTable {
+  background-color: rgba(169, 169, 169, 0.5);
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
