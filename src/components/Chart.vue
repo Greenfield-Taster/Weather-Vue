@@ -6,7 +6,6 @@
 
 <script setup>
 import { ref, onMounted, defineProps, watch } from "vue";
-
 import Chart from "chart.js/auto";
 import axios from "axios";
 import moment from "moment";
@@ -56,18 +55,22 @@ const createChart = () => {
   });
 };
 
-const getForecastForToday = () => {
+const getForecastFor24Hours = () => {
   axios
     .get(
-      `https://api.openweathermap.org/data/2.5/forecast?q=${props.city},${props.country}&units=metric&appid=dfa005455b567aa3e83b16a666d56b88`
+      `https://api.openweathermap.org/data/2.5/forecast/?q=${props.city},${props.country}&units=metric&appid=dfa005455b567aa3e83b16a666d56b88`
     )
     .then((response) => {
-      console.log("Chart getForecastForToday", response.data.list);
+      console.log("Chart getForecastFor24Hours", response.data.list);
 
       const filteredData = response.data.list.filter(
         (forecast) =>
-          moment(forecast.dt_txt).format("YYYY-MM-DD") ===
-          moment().format("YYYY-MM-DD")
+          moment(forecast.dt_txt).isBetween(
+            moment(),
+            moment().add(24, "hours"),
+            "hour",
+            "[)"
+          ) && moment(forecast.dt_txt).hour() % 3 === 0
       );
 
       labels.value = filteredData.map((forecast) =>
@@ -78,20 +81,20 @@ const getForecastForToday = () => {
       createChart();
     })
     .catch((error) => {
-      console.log("Chart getForecastForToday:", error);
+      console.log("Chart getForecastFor24Hours:", error);
     });
 };
 watch(
   () => [props.city, props.country],
   () => {
-    getForecastForToday();
+    getForecastFor24Hours();
   }
 );
 onMounted(() => {
   myChart.value = document.getElementById("myChart");
 
   createChart();
-  getForecastForToday();
+  getForecastFor24Hours();
 });
 </script>
 

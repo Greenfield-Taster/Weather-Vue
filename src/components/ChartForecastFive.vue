@@ -43,12 +43,20 @@ const createChart = () => {
     options: {
       scales: {
         x: {
-          ticks: {
-            callback: function (value, index, values) {
-              return moment(value).format("HH:mm"); //Only time without date
+          // type: "time",
+          time: {
+            displayFormats: {
+              quarter: "hh:mm",
             },
           },
         },
+        // x: {
+        //   ticks: {
+        //     callback: function (value, index, values) {
+        //       return moment(value).format("HH:mm"); //Only time without date
+        //     },
+        //   },
+        // },
         y: {
           beginAtZero: true,
         },
@@ -70,7 +78,9 @@ const getFiveDayForecast = () => {
     .then((response) => {
       console.log("Chart", response.data.list);
 
-      labels.value = response.data.list.map((forecast) => forecast.dt_txt);
+      labels.value = response.data.list.map((forecast) =>
+        moment(forecast.dt_txt).format("HH:mm")
+      );
       data.value = response.data.list.map((forecast) => forecast.main.temp);
 
       createChart();
@@ -106,7 +116,8 @@ onMounted(() => {
   padding: 10px 0;
 }
 canvas {
-  width: 100%;
+  display: flex;
+  width: 500px;
   height: auto;
 }
 </style>

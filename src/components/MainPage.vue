@@ -56,7 +56,7 @@
         Chart for 5 days
       </button>
     </div>
-    <div class="currentWeatherTable">
+    <!-- <div class="currentWeatherTable">
       <table>
         <thead>
           <td>
@@ -111,7 +111,7 @@
           </tr>
         </tbody>
       </table>
-    </div>
+    </div> -->
 
     <div class="chartOne">
       <MyChart :city="cityCurrent" :country="countryCurrentId" />
@@ -384,5 +384,13 @@ img {
 }
 .buttonAdd {
   flex: 0 0 calc(20% - 5px);
+}
+.chartOne {
+  width: 900px;
+  height: auto;
+}
+.chartFive {
+  width: 900px;
+  height: auto;
 }
 </style>
