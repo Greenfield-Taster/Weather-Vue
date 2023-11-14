@@ -6,7 +6,6 @@ import { createRouter, createWebHistory } from "vue-router";
 import App from "./components/App.vue";
 import MainPage from "./components/MainPage.vue";
 import WeatherInfo from "./components/WeatherInfo.vue";
-import Chart from "./components/Chart.vue";
 
 const routes = [
   { path: "/", component: MainPage, props: true },

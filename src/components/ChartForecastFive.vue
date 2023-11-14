@@ -1,19 +1,18 @@
 <template>
   <div class="back">
-    <canvas id="myChart"></canvas>
+    <canvas id="myChartFive"></canvas>
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted, defineProps, watch } from "vue";
-
 import Chart from "chart.js/auto";
 import axios from "axios";
 import moment from "moment";
 
 const props = defineProps(["city", "country"]);
 
-const myChart = ref(null);
+const myChartFive = ref(null);
 const labels = ref([]);
 const data = ref([]);
 let chartInstance = null;
@@ -23,7 +22,7 @@ const createChart = () => {
     chartInstance.destroy();
   }
 
-  const ctx = myChart.value.getContext("2d");
+  const ctx = myChartFive.value.getContext("2d");
   chartInstance = new Chart(ctx, {
     type: "line",
     data: {
@@ -43,6 +42,13 @@ const createChart = () => {
     },
     options: {
       scales: {
+        x: {
+          ticks: {
+            callback: function (value, index, values) {
+              return moment(value).format("HH:mm"); //Only time without date
+            },
+          },
+        },
         y: {
           beginAtZero: true,
         },
@@ -56,7 +62,7 @@ const createChart = () => {
   });
 };
 
-const getForecastForToday = () => {
+const getFiveDayForecast = () => {
   axios
     .get(
       `https://api.openweathermap.org/data/2.5/forecast?q=${props.city},${props.country}&units=metric&appid=dfa005455b567aa3e83b16a666d56b88`
@@ -64,17 +70,8 @@ const getForecastForToday = () => {
     .then((response) => {
       console.log("Chart", response.data.list);
 
-      const filteredData = response.data.list.filter(
-        (forecast) =>
-          moment(forecast.dt_txt).format("YYYY-MM-DD") ===
-          moment().format("YYYY-MM-DD")
-      );
-
-      console.log("City and Country:", props.city, props.country);
-      labels.value = filteredData.map((forecast) =>
-        moment(forecast.dt_txt).format("HH:mm")
-      );
-      data.value = filteredData.map((forecast) => forecast.main.temp);
+      labels.value = response.data.list.map((forecast) => forecast.dt_txt);
+      data.value = response.data.list.map((forecast) => forecast.main.temp);
 
       createChart();
     })
@@ -85,14 +82,14 @@ const getForecastForToday = () => {
 watch(
   () => [props.city, props.country],
   () => {
-    getForecastForToday();
+    getFiveDayForecast();
   }
 );
 onMounted(() => {
-  myChart.value = document.getElementById("myChart");
+  myChartFive.value = document.getElementById("myChartFive");
 
   createChart();
-  getForecastForToday();
+  getFiveDayForecast();
 });
 </script>
 

@@ -57,13 +57,16 @@
         </tbody>
       </table>
     </div>
-    <Chart :city="selectedCityName" :country="selectedCountryName" />
+    <!-- <Chart :city="selectedCityName" :country="selectedCountryName" /> -->
+    <MyChartForFive :city="selectedCityName" :country="selectedCountryName" />
   </div>
 </template>
 <script setup>
 import { ref, onMounted } from "vue";
 import axios from "axios";
 import Chart from "./Chart.vue";
+
+import MyChartForFive from "./ChartForecastFive.vue";
 
 const cities = ref([]);
 const selectedCity = ref({

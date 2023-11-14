@@ -103,7 +103,9 @@
       </table>
     </div> -->
 
-    <MyChart :city="cityCurrent" :country="countryCurrentId" />
+    <!-- <MyChart :city="cityCurrent" :country="countryCurrentId" /> -->
+
+    <MyChartForFive :city="cityCurrent" :country="countryCurrentId" />
   </div>
 </template>
 
@@ -111,6 +113,7 @@
 import { computed, onMounted, ref } from "vue";
 import axios from "axios";
 import MyChart from "./Chart.vue";
+import MyChartForFive from "./ChartForecastFive.vue";
 
 const cityCurrent = ref("");
 const countryCurrent = ref("");
