@@ -57,11 +57,13 @@
         </tbody>
       </table>
     </div>
+    <Chart :city="selectedCityName" :country="selectedCountryName" />
   </div>
 </template>
 <script setup>
 import { ref, onMounted } from "vue";
 import axios from "axios";
+import Chart from "./Chart.vue";
 
 const cities = ref([]);
 const selectedCity = ref({
@@ -80,6 +82,8 @@ const selectedCity = ref({
 });
 
 const tempCelsius = ref("");
+const selectedCityName = ref("");
+const selectedCountryName = ref("");
 
 const props = defineProps(["id"]);
 
@@ -89,7 +93,7 @@ onMounted(() => {
       `https://api.openweathermap.org/data/2.5/weather?q=${props.id}&appid=dfa005455b567aa3e83b16a666d56b88`
     )
     .then((response) => {
-      console.log(response);
+      console.log("Selected city", response);
       selectedCity.value.humidity = response.data.main.humidity;
       selectedCity.value.temp = response.data.main.temp;
       selectedCity.value.main = response.data.weather[0].description;
@@ -101,7 +105,13 @@ onMounted(() => {
       selectedCity.value.country = response.data.sys.country;
       selectedCity.value.wind = response.data.wind.speed;
 
+      selectedCountryName.value = response.data.sys.country;
+      selectedCityName.value = response.data.name;
+
       tempCelsius.value = (selectedCity.value.temp - 273.15).toFixed(0);
+    })
+    .catch((error) => {
+      console.log("In selected city", error);
     });
 
   const storedCities = JSON.parse(localStorage.getItem("cities")) || [];

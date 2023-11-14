@@ -1,6 +1,5 @@
 <template>
   <div class="back">
-    <p>{{ props.city }}, {{ props.country }}</p>
     <canvas id="myChart"></canvas>
   </div>
 </template>
@@ -12,10 +11,6 @@ import Chart from "chart.js/auto";
 import axios from "axios";
 import moment from "moment";
 
-// const props = defineProps({ city: String, country: String });
-// const props = defineProps(["city", "country"]);
-// const city = ref(props.city);
-// const country = ref(props.country);
 const props = defineProps(["city", "country"]);
 
 const myChart = ref(null);
