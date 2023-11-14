@@ -62,7 +62,7 @@ const getForecastForToday = () => {
       `https://api.openweathermap.org/data/2.5/forecast?q=${props.city},${props.country}&units=metric&appid=dfa005455b567aa3e83b16a666d56b88`
     )
     .then((response) => {
-      console.log("Chart", response.data.list);
+      console.log("Chart getForecastForToday", response.data.list);
 
       const filteredData = response.data.list.filter(
         (forecast) =>
@@ -70,7 +70,6 @@ const getForecastForToday = () => {
           moment().format("YYYY-MM-DD")
       );
 
-      console.log("City and Country:", props.city, props.country);
       labels.value = filteredData.map((forecast) =>
         moment(forecast.dt_txt).format("HH:mm")
       );
@@ -79,7 +78,7 @@ const getForecastForToday = () => {
       createChart();
     })
     .catch((error) => {
-      console.log("Chart:", error);
+      console.log("Chart getForecastForToday:", error);
     });
 };
 watch(

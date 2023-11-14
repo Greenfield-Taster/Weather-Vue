@@ -39,7 +39,7 @@ td img {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 10em;
+  gap: 3em;
   padding: 10px;
 }
 .currentWeatherTable {
@@ -47,4 +47,25 @@ td img {
   width: 100%;
   height: auto;
   border-radius: 10px;
+}
+.navigationButtons {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  gap: 1em;
+  justify-content: center;
+}
+.navigationButton {
+  width: 150px;
+  height: 40px;
+  cursor: pointer;
+  border-radius: 5px;
+  border: none;
+  background-color: rgba(200, 200, 200, 0.7);
+  color: white;
+  font-size: 17px;
+}
+.navigationButton:hover {
+  background-color: rgba(200, 200, 200, 1);
+  color: rgba(85, 85, 85, 0.5);
 }

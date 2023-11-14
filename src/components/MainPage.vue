@@ -45,8 +45,18 @@
         </router-link>
       </div>
     </div>
-
-    <!-- <div class="currentWeatherTable">
+    <div class="navigationButtons">
+      <button class="navigationButton" @click="showTableStatistic">
+        Table
+      </button>
+      <button class="navigationButton" @click="chartForToday">
+        Chart for today
+      </button>
+      <button class="navigationButton" @click="chartForFiveDays">
+        Chart for 5 days
+      </button>
+    </div>
+    <div class="currentWeatherTable">
       <table>
         <thead>
           <td>
@@ -101,11 +111,15 @@
           </tr>
         </tbody>
       </table>
-    </div> -->
+    </div>
 
-    <!-- <MyChart :city="cityCurrent" :country="countryCurrentId" /> -->
+    <div class="chartOne">
+      <MyChart :city="cityCurrent" :country="countryCurrentId" />
+    </div>
 
-    <MyChartForFive :city="cityCurrent" :country="countryCurrentId" />
+    <div class="chartFive">
+      <MyChartForFive :city="cityCurrent" :country="countryCurrentId" />
+    </div>
   </div>
 </template>
 
@@ -242,6 +256,10 @@ const deleteCity = (index) => {
   alert("deleted");
 };
 
+const buttonsNavigation = () => {
+  if (showTableStatistic) {
+  }
+};
 onMounted(() => {
   getLocation();
   getWeatherInfo();

@@ -57,7 +57,8 @@
         </tbody>
       </table>
     </div>
-    <!-- <Chart :city="selectedCityName" :country="selectedCountryName" /> -->
+
+    <Chart :city="selectedCityName" :country="selectedCountryName" />
     <MyChartForFive :city="selectedCityName" :country="selectedCountryName" />
   </div>
 </template>
