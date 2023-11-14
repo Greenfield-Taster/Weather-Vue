@@ -1,19 +1,29 @@
 <template>
   <div class="back">
+    <p>{{ props.city }}, {{ props.country }}</p>
     <canvas id="myChart"></canvas>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, defineProps, watch } from "vue";
+
 import Chart from "chart.js/auto";
 import axios from "axios";
 import moment from "moment";
+
+// const props = defineProps({ city: String, country: String });
+// const props = defineProps(["city", "country"]);
+// const city = ref(props.city);
+// const country = ref(props.country);
+const props = defineProps(["city", "country"]);
 
 const myChart = ref(null);
 const labels = ref([]);
 const data = ref([]);
 let chartInstance = null;
+// const city = ref("");
+// const country = ref("");
 
 const createChart = () => {
   if (chartInstance) {
@@ -56,7 +66,7 @@ const createChart = () => {
 const getForecastForToday = () => {
   axios
     .get(
-      "https://api.openweathermap.org/data/2.5/forecast?q=kyiv,ua&units=metric&appid=dfa005455b567aa3e83b16a666d56b88"
+      `https://api.openweathermap.org/data/2.5/forecast?q=${props.city},${props.country}&units=metric&appid=dfa005455b567aa3e83b16a666d56b88`
     )
     .then((response) => {
       console.log("Chart", response.data.list);
@@ -67,6 +77,7 @@ const getForecastForToday = () => {
           moment().format("YYYY-MM-DD")
       );
 
+      console.log("City and Country:", props.city, props.country);
       labels.value = filteredData.map((forecast) =>
         moment(forecast.dt_txt).format("HH:mm")
       );
@@ -78,7 +89,12 @@ const getForecastForToday = () => {
       console.log("Chart:", error);
     });
 };
-
+watch(
+  () => [props.city, props.country],
+  () => {
+    getForecastForToday();
+  }
+);
 onMounted(() => {
   myChart.value = document.getElementById("myChart");
 

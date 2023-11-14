@@ -103,7 +103,7 @@
       </table>
     </div> -->
 
-    <MyChart />
+    <MyChart :city="cityCurrent" :country="countryCurrentId" />
   </div>
 </template>
 
@@ -114,6 +114,7 @@ import MyChart from "./Chart.vue";
 
 const cityCurrent = ref("");
 const countryCurrent = ref("");
+const countryCurrentId = ref("");
 const latitude = ref("");
 const longitude = ref("");
 const cityInput = ref("");
@@ -177,6 +178,7 @@ const getWeatherInfo = (position) => {
         Weather.value.id = response.data.weather[0].id;
         Weather.value.wind = response.data.wind.speed;
         Weather.value.countryId = response.data.sys.country;
+        countryCurrentId.value = response.data.sys.country;
 
         tempCelsius.value = (Weather.value.temp - 273.15).toFixed(0);
       });
