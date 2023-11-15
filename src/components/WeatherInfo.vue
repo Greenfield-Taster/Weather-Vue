@@ -1,6 +1,11 @@
 <template>
   <div class="wrapper">
-    <div class="currentWeatherTable">
+    <div class="navigationButtons">
+      <button @click="showChart(1)">Table</button>
+      <button @click="showChart(2)">Chart for today</button>
+      <button @click="showChart(3)">Chart for 5 days</button>
+    </div>
+    <div v-if="selectedChart === 1" class="currentWeatherTable">
       <table>
         <thead>
           <td>
@@ -58,8 +63,16 @@
       </table>
     </div>
 
-    <Chart :city="selectedCityName" :country="selectedCountryName" />
-    <MyChartForFive :city="selectedCityName" :country="selectedCountryName" />
+    <Chart
+      v-else-if="selectedChart === 2"
+      :city="selectedCityName"
+      :country="selectedCountryName"
+    />
+    <MyChartForFive
+      v-else-if="selectedChart === 3"
+      :city="selectedCityName"
+      :country="selectedCountryName"
+    />
   </div>
 </template>
 <script setup>
@@ -88,8 +101,13 @@ const selectedCity = ref({
 const tempCelsius = ref("");
 const selectedCityName = ref("");
 const selectedCountryName = ref("");
+const selectedChart = ref(1);
 
 const props = defineProps(["id"]);
+
+const showChart = (chartNumber) => {
+  selectedChart.value = chartNumber;
+};
 
 onMounted(() => {
   axios

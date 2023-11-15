@@ -46,17 +46,11 @@
       </div>
     </div>
     <div class="navigationButtons">
-      <button class="navigationButton" @click="showTableStatistic">
-        Table
-      </button>
-      <button class="navigationButton" @click="chartForToday">
-        Chart for today
-      </button>
-      <button class="navigationButton" @click="chartForFiveDays">
-        Chart for 5 days
-      </button>
+      <button @click="showChart(1)">Table</button>
+      <button @click="showChart(2)">Chart for today</button>
+      <button @click="showChart(3)">Chart for 5 days</button>
     </div>
-    <!-- <div class="currentWeatherTable">
+    <div v-if="selectedChart === 1" class="currentWeatherTable table">
       <table>
         <thead>
           <td>
@@ -111,13 +105,13 @@
           </tr>
         </tbody>
       </table>
-    </div> -->
+    </div>
 
-    <div class="chartOne">
+    <div v-else-if="selectedChart === 2" class="chartOne today">
       <MyChart :city="cityCurrent" :country="countryCurrentId" />
     </div>
 
-    <div class="chartFive">
+    <div v-else-if="selectedChart === 3" class="chartFive fiveDays">
       <MyChartForFive :city="cityCurrent" :country="countryCurrentId" />
     </div>
   </div>
@@ -140,6 +134,8 @@ const selectedCity = ref("");
 const citiesList = ref([]);
 const showSuggestions = ref(false);
 const storedCities = ref("");
+
+const selectedChart = ref(1);
 
 const Weather = ref({
   id: "",
@@ -255,10 +251,8 @@ const deleteCity = (index) => {
 
   alert("deleted");
 };
-
-const buttonsNavigation = () => {
-  if (showTableStatistic) {
-  }
+const showChart = (chartNumber) => {
+  selectedChart.value = chartNumber;
 };
 onMounted(() => {
   getLocation();
