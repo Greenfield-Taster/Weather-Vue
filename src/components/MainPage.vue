@@ -462,4 +462,49 @@ li {
 li:last-child {
   border-bottom: none;
 }
+@media (max-width: 800px) {
+  #app {
+    padding-right: 5px;
+  }
+  .addCityBlock {
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+  }
+}
+@media (max-width: 450px) {
+  .addCityBlock {
+    padding: 0px, 0px;
+    margin: 0 0;
+  }
+  #app {
+    padding: 0, 0;
+    margin: 0 0;
+  }
+  .action check {
+    width: 70%;
+  }
+  .input-field {
+    width: 100%;
+  }
+}
+@media (max-width: 530px) {
+  .navigationButtons {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .navigationButtons button {
+    width: 300px;
+  }
+}
+@media (max-width: 490px) {
+  .wrapper {
+    padding: 0;
+  }
+  #app {
+    padding: 0;
+  }
+}
 </style>
