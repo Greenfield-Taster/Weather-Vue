@@ -1,49 +1,68 @@
 <template>
   <div class="wrapper">
     <div class="addCityBlock">
-      <div class="inputCity">
-        <div class="input-container">
-          <input
-            class="input-field"
-            v-model="cityInput"
-            @input="onInput"
-            placeholder="type city"
-          />
-          <img @click="clearInput" src="../assets/iconsCancel.png" />
-          <ul v-if="showSuggestions">
-            <li
-              v-for="city in filtredCities"
-              :key="city"
-              @mousedown="selectFiltredCity(city)"
-            >
-              {{ city }}
-            </li>
-          </ul>
-        </div>
-        <div class="typeCityAction">
-          <div class="buttonCheck">
-            <router-link v-bind:to="'/weather-info/' + cityInput">
-              <button class="action" @click="selectCity">Check weather</button>
-            </router-link>
-          </div>
-          <button class="action buttonAdd" @click="addCity(cityInput)">
-            Add
-          </button>
-        </div>
-      </div>
-
-      <div class="selectedCity">
-        <select v-model="selectedCity">
-          <option value="" disabled>Select city</option>
-          <option v-for="(city, index) in cities" :key="index">
-            {{ city }}
-            <!-- <span @click="deleteCity(index)" class="delete-button"> х </span> -->
-          </option>
-        </select>
-        <router-link v-bind:to="'/weather-info/' + selectedCity">
-          <button class="action" @click="selectCity">Select city</button>
-        </router-link>
-      </div>
+      <table>
+        <thead>
+          <tr>
+            <td><p>Type city</p></td>
+            <td><p>Select city</p></td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <div class="inputCity">
+                <div class="input-container">
+                  <input
+                    class="input-field"
+                    v-model="cityInput"
+                    @input="onInput"
+                    placeholder="type city"
+                  />
+                  <img @click="clearInput" src="../assets/iconsCancel.png" />
+                  <ul v-if="showSuggestions">
+                    <li
+                      v-for="city in filtredCities"
+                      :key="city"
+                      @mousedown="selectFiltredCity(city)"
+                    >
+                      {{ city }}
+                    </li>
+                  </ul>
+                </div>
+                <div class="typeCityAction">
+                  <div class="buttonCheck">
+                    <router-link v-bind:to="'/weather-info/' + cityInput">
+                      <button class="action" @click="selectCity">
+                        Check weather
+                      </button>
+                    </router-link>
+                  </div>
+                  <button class="action buttonAdd" @click="addCity(cityInput)">
+                    Add
+                  </button>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="selectedCity">
+                <select v-model="selectedCity">
+                  <option value="" disabled>Select city</option>
+                  <option v-for="(city, index) in cities" :key="index">
+                    {{ city }}
+                    <!-- <span @click="deleteCity(index)" class="delete-button"> х </span> -->
+                  </option>
+                </select>
+                <router-link v-bind:to="'/weather-info/' + selectedCity">
+                  <button class="action" @click="selectCity">
+                    Select city
+                  </button>
+                </router-link>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
     <div class="navigationButtons">
       <button @click="showChart(1)">Table</button>
@@ -268,20 +287,21 @@ onMounted(() => {
 <style scoped>
 .addCityBlock {
   display: flex;
-  flex-direction: row;
-  justify-content: space-around;
+  /* flex-direction: row; */
+  /* justify-content: space-around; */
 
   background-color: rgba(169, 169, 169, 0.5);
   width: 60%;
   height: auto;
   border-radius: 10px;
-  padding: 30px 0;
+  padding: 20px 10px;
 }
+
 .inputCity {
   display: flex;
   flex-direction: column;
   gap: 1em;
-  width: 45%;
+  width: 100%;
 }
 .inputCity input {
   background-color: rgba(200, 200, 200, 0.7);
@@ -322,8 +342,8 @@ onMounted(() => {
   padding: 15px 10px;
   box-sizing: border-box;
   z-index: 1;
-  max-height: 20em; /* Set the maximum height for the dropdown */
-  overflow-y: auto; /* Enable vertical scrollbar if needed */
+  max-height: 20em;
+  overflow-y: auto;
 }
 .input-container ul li {
   list-style: none;
@@ -339,7 +359,7 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   gap: 1em;
-  width: 45%;
+  width: 100%;
 }
 .selectedCity select {
   cursor: pointer;
@@ -386,5 +406,18 @@ img {
 .chartFive {
   width: 900px;
   height: auto;
+}
+table p {
+  font-weight: bold;
+  font-size: 25px;
+}
+.addCityBlockError {
+  display: flex;
+  background-color: rgba(169, 169, 169, 0.5);
+  width: 60%;
+  height: auto;
+  border-radius: 10px;
+  padding: 20px 10px;
+  border-color: red;
 }
 </style>

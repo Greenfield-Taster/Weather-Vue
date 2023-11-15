@@ -1,5 +1,18 @@
 <template>
   <div class="wrapper">
+    <div class="fullTitle">
+      <router-link v-bind:to="'/'">
+        <button @click="goBack">Go back</button>
+      </router-link>
+      <div class="title">
+        <img
+          :src="`https://flagsapi.com/${selectedCity.country}/flat/64.png`"
+        />
+        <h1>
+          {{ props.id }}
+        </h1>
+      </div>
+    </div>
     <div class="navigationButtons">
       <button @click="showChart(1)">Table</button>
       <button @click="showChart(2)">Chart for today</button>
@@ -143,5 +156,22 @@ onMounted(() => {
 <style scoped>
 img {
   width: 40px;
+}
+.title {
+  font-size: 2rem;
+  display: flex;
+  flex-direction: row;
+  gap: 2em;
+}
+.title img {
+  width: 80px;
+}
+.fullTitle {
+  display: flex;
+  align-content: flex-end;
+  flex-direction: row;
+  align-items: center;
+  gap: 15em;
+  width: 100%;
 }
 </style>
