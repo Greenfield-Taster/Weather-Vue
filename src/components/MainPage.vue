@@ -50,7 +50,6 @@
                   <option value="" disabled>Select city</option>
                   <option v-for="(city, index) in cities" :key="index">
                     {{ city }}
-                    <!-- <span @click="deleteCity(index)" class="delete-button"> х </span> -->
                   </option>
                 </select>
                 <router-link v-bind:to="'/weather-info/' + selectedCity">
@@ -134,6 +133,20 @@
       <MyChartForFive :city="cityCurrent" :country="countryCurrentId" />
     </div>
   </div>
+
+  <Modal :open="isOpen" @close="isOpen = !isOpen">
+    <div>
+      <div class="wrapperModal">
+        <p>You can only have up to 5 cities</p>
+        <ul>
+          <li v-for="localCity in storedCities" :key="localCity">
+            {{ localCity }}
+            <button @click="deleteCity(localCity)">delete</button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </Modal>
 </template>
 
 <script setup>
@@ -141,6 +154,7 @@ import { computed, onMounted, ref } from "vue";
 import axios from "axios";
 import MyChart from "./Chart.vue";
 import MyChartForFive from "./ChartForecastFive.vue";
+import Modal from "./Modal.vue";
 
 const cityCurrent = ref("");
 const countryCurrent = ref("");
@@ -153,6 +167,7 @@ const selectedCity = ref("");
 const citiesList = ref([]);
 const showSuggestions = ref(false);
 const storedCities = ref("");
+const isOpen = ref(false);
 
 const selectedChart = ref(1);
 
@@ -233,15 +248,12 @@ const getAllCities = () => {
 };
 
 const addCity = (city) => {
-  if (JSON.stringify(cities.value).length <= 5) {
+  if (cities.value.length < 5) {
     cities.value.push(city);
     localStorage.setItem("cities", JSON.stringify(cities.value));
-    console.log("Cities value", cities.value);
-    alert(JSON.stringify(cities.value));
-
     cityInput.value = "";
   } else {
-    alert("You can only have up to 5 cities");
+    isOpen.value = true; // Open modal if there are already 5 cities
   }
 };
 const clearInput = () => {
@@ -260,16 +272,14 @@ const selectFiltredCity = (selectedCity) => {
 const onInput = () => {
   showSuggestions.value = cityInput.value.length >= 2;
 };
-const deleteCity = (index) => {
-  const storedCities = JSON.parse(localStorage.getItem("cities")) || [];
-  storedCities.splice(index, 1);
-  localStorage.setItem("cities", JSON.stringify(storedCities));
-
-  cities.value.splice(index, 1);
-  selectedCity.value = "";
-
-  alert("deleted");
+const deleteCity = (city) => {
+  const index = cities.value.indexOf(city);
+  if (index !== -1) {
+    cities.value.splice(index, 1);
+    localStorage.setItem("cities", JSON.stringify(cities.value));
+  }
 };
+
 const showChart = (chartNumber) => {
   selectedChart.value = chartNumber;
 };
@@ -278,7 +288,7 @@ onMounted(() => {
   getWeatherInfo();
 
   storedCities.value = JSON.parse(localStorage.getItem("cities")) || [];
-  cities.value = storedCities.value;
+  cities.value = storedCities.value || [];
   console.log("Cities in storage", storedCities.value);
 
   getAllCities();
@@ -419,5 +429,37 @@ table p {
   border-radius: 10px;
   padding: 20px 10px;
   border-color: red;
+}
+.wrapperModal {
+  max-width: 400px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  z-index: 1;
+  color: rgb(52, 63, 63);
+}
+.wrapperModal p {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+li:last-child {
+  border-bottom: none;
 }
 </style>
