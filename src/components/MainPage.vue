@@ -168,8 +168,9 @@ const showError = ref(false);
 const router = useRouter();
 const isLoading = ref(true);
 const selectedChart = ref(1);
-const keyOpenweather = import.meta.env.VITE_OPENWEATHERMAP_TOREN;
+
 const keyLocation = import.meta.env.VITE_LOCATION_TOKEN;
+const keyOpenweather = import.meta.env.VITE_OPENWEATHERMAP_TOREN;
 
 const Weather = ref({
   id: "",
@@ -193,7 +194,6 @@ const getLocation = () => {
 const showPosition = (position) => {
   latitude.value = position.coords.latitude;
   longitude.value = position.coords.longitude;
-  // const apiKeyLocation = process.env.LOCATION_TOKEN;
   axios
     .get(
       `https://us1.locationiq.com/v1/reverse?lat=${latitude.value}&lon=${longitude.value}&format=json&key=${keyLocation}`
@@ -310,6 +310,7 @@ onMounted(() => {
   console.log("Cities in storage", storedCities.value);
 
   getAllCities();
+  console.log(keyLocation, keyOpenweather);
 });
 </script>
 <style scoped>
