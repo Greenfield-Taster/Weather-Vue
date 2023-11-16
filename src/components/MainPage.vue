@@ -139,6 +139,7 @@
       </div>
     </div>
   </Modal>
+  <Preloader v-if="isLoading" />
 </template>
 
 <script setup>
@@ -147,6 +148,7 @@ import axios from "axios";
 import MyChart from "./Chart.vue";
 import MyChartForFive from "./ChartForecastFive.vue";
 import Modal from "./Modal.vue";
+import Preloader from "./Preloader.vue";
 import { useRouter } from "vue-router";
 
 const cityCurrent = ref("");
@@ -163,6 +165,7 @@ const storedCities = ref("");
 const isOpen = ref(false);
 const showError = ref(false);
 const router = useRouter();
+const isLoading = ref(true);
 
 const selectedChart = ref(1);
 
@@ -200,6 +203,7 @@ const showPosition = (position) => {
       console.log(countryCurrent.value);
 
       getWeatherInfo(position);
+      isLoading.value = false;
     })
     .catch((error) => console.log("Міста не знайдено(!)", error));
 };
