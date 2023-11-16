@@ -203,7 +203,6 @@ const showPosition = (position) => {
       console.log(countryCurrent.value);
 
       getWeatherInfo(position);
-      isLoading.value = false;
     })
     .catch((error) => console.log("Міста не знайдено(!)", error));
 };
@@ -308,6 +307,9 @@ onMounted(() => {
   console.log("Cities in storage", storedCities.value);
 
   getAllCities();
+  setTimeout(() => {
+    isLoading.value = false;
+  }, 2000);
 });
 </script>
 <style scoped>
