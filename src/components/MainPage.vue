@@ -167,8 +167,9 @@ const isOpen = ref(false);
 const showError = ref(false);
 const router = useRouter();
 const isLoading = ref(true);
-
 const selectedChart = ref(1);
+const keyOpenweather = import.meta.env.VITE_OPENWEATHERMAP_TOREN;
+const keyLocation = import.meta.env.VITE_LOCATION_TOKEN;
 
 const Weather = ref({
   id: "",
@@ -195,7 +196,7 @@ const showPosition = (position) => {
   // const apiKeyLocation = process.env.LOCATION_TOKEN;
   axios
     .get(
-      `https://us1.locationiq.com/v1/reverse?lat=${latitude.value}&lon=${longitude.value}&format=json&key=pk.dfc77c3e733a06fba2855876c491f105`
+      `https://us1.locationiq.com/v1/reverse?lat=${latitude.value}&lon=${longitude.value}&format=json&key=${keyLocation}`
     )
     .then((response) => {
       cityCurrent.value = response.data.address.city;
@@ -214,7 +215,7 @@ const getWeatherInfo = (position) => {
   if (latitude.value && longitude.value) {
     axios
       .get(
-        `https://api.openweathermap.org/data/2.5/weather?lat=${latitude.value}&lon=${longitude.value}&appid=dfa005455b567aa3e83b16a666d56b88`
+        `https://api.openweathermap.org/data/2.5/weather?lat=${latitude.value}&lon=${longitude.value}&appid=${keyOpenweather}`
       )
       .then((response) => {
         Weather.value.humidity = response.data.main.humidity;
@@ -309,8 +310,6 @@ onMounted(() => {
   console.log("Cities in storage", storedCities.value);
 
   getAllCities();
-
-  console.log(process.env.LOCATION_TOKEN);
 });
 </script>
 <style scoped>
