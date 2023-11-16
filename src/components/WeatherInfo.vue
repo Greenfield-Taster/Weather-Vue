@@ -1,16 +1,20 @@
 <template>
   <div class="wrapper">
     <div class="fullTitle">
-      <router-link v-bind:to="'/'">
-        <button @click="goBack">Go back</button>
-      </router-link>
-      <div class="title">
-        <img
-          :src="`https://flagsapi.com/${selectedCity.country}/flat/64.png`"
-        />
-        <h1>
-          {{ props.id }}
-        </h1>
+      <div class="goBackLink">
+        <router-link v-bind:to="'/'">
+          <button class="goBackButton">Go back</button>
+        </router-link>
+      </div>
+      <div class="titleContainer">
+        <div class="title">
+          <img
+            :src="`https://flagsapi.com/${selectedCity.country}/flat/64.png`"
+          />
+          <h1>
+            {{ props.id }}
+          </h1>
+        </div>
       </div>
     </div>
     <div class="navigationButtons">
@@ -158,10 +162,11 @@ img {
   width: 40px;
 }
 .title {
-  font-size: 2rem;
+  font-size: 29px;
   display: flex;
   flex-direction: row;
   gap: 2em;
+  color: white;
 }
 .title img {
   width: 80px;
@@ -173,5 +178,56 @@ img {
   align-items: center;
   gap: 15em;
   width: 100%;
+}
+@media (max-width: 1050px) {
+  .fullTitle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0px;
+  }
+
+  .titleContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+  }
+}
+@media (max-width: 750px) {
+  .fullTitle {
+    flex-direction: column;
+  }
+  .titleContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+  }
+}
+@media (max-width: 500px) {
+  .title {
+    flex-direction: column;
+    gap: 5px;
+    align-items: center;
+    padding-top: 15px;
+  }
+  .currentWeatherTable {
+    width: 100%;
+  }
+  .navigationButtons {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .navigationButtons button {
+    width: 300px;
+  }
+}
+@media (max-width: 370px) {
+  .title {
+    font-size: 25px;
+  }
 }
 </style>
