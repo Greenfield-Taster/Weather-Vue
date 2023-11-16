@@ -22,7 +22,7 @@
       <button @click="showChart(2)">Chart for today</button>
       <button @click="showChart(3)">Chart for 5 days</button>
     </div>
-    
+
     <div v-if="selectedChart === 1" class="currentWeatherTable">
       <table>
         <thead>
@@ -121,6 +121,8 @@ const selectedCityName = ref("");
 const selectedCountryName = ref("");
 const selectedChart = ref(1);
 
+const keyOpenweather = import.meta.env.VITE_OPENWEATHERMAP_TOREN;
+
 const props = defineProps(["id"]);
 
 const showChart = (chartNumber) => {
@@ -130,7 +132,7 @@ const showChart = (chartNumber) => {
 onMounted(() => {
   axios
     .get(
-      `https://api.openweathermap.org/data/2.5/weather?q=${props.id}&appid=dfa005455b567aa3e83b16a666d56b88`
+      `https://api.openweathermap.org/data/2.5/weather?q=${props.id}&appid=${keyOpenweather}`
     )
     .then((response) => {
       console.log("Selected city", response);
