@@ -5,6 +5,7 @@
       alt="Background"
       class="background-image"
     />
+    <img class="loadCircle" src="../assets/load.gif" />
   </div>
 </template>
 <script setup></script>
@@ -30,5 +31,8 @@
 
   background-repeat: no-repeat;
   background-size: cover;
+}
+.loadCircle {
+  width: 100px;
 }
 </style>

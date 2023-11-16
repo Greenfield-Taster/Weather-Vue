@@ -1,6 +1,6 @@
 <template>
   <Preloader v-if="isLoading" />
-  <div class="wrapper">
+  <div v-else class="wrapper">
     <div :class="{ errorForm: showError, addCityBlockWrapper: true }">
       <div class="addCityBlock">
         <div class="inputCity">
