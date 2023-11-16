@@ -5,7 +5,6 @@
       alt="Background"
       class="background-image"
     />
-    <div class="spinner"></div>
   </div>
 </template>
 <script setup></script>

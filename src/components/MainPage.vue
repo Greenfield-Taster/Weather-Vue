@@ -1,4 +1,5 @@
 <template>
+  <Preloader v-if="isLoading" />
   <div class="wrapper">
     <div :class="{ errorForm: showError, addCityBlockWrapper: true }">
       <div class="addCityBlock">
@@ -139,7 +140,6 @@
       </div>
     </div>
   </Modal>
-  <Preloader v-if="isLoading" />
 </template>
 
 <script setup>
