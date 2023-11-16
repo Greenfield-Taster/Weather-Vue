@@ -22,6 +22,7 @@
       <button @click="showChart(2)">Chart for today</button>
       <button @click="showChart(3)">Chart for 5 days</button>
     </div>
+    
     <div v-if="selectedChart === 1" class="currentWeatherTable">
       <table>
         <thead>

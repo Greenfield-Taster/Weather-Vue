@@ -56,7 +56,7 @@
       <button @click="showChart(2)">Chart for today</button>
       <button @click="showChart(3)">Chart for 5 days</button>
     </div>
-    <div v-if="selectedChart === 1" class="currentWeatherTable table">
+    <div v-if="selectedChart === 1" class="currentWeatherTable">
       <table>
         <thead>
           <td>
@@ -113,13 +113,17 @@
       </table>
     </div>
 
-    <div v-else-if="selectedChart === 2" class="chartOne today">
-      <MyChart :city="cityCurrent" :country="countryCurrentId" />
-    </div>
+    <MyChart
+      v-else-if="selectedChart === 2"
+      :city="cityCurrent"
+      :country="countryCurrentId"
+    />
 
-    <div v-else-if="selectedChart === 3" class="chartFive fiveDays">
-      <MyChartForFive :city="cityCurrent" :country="countryCurrentId" />
-    </div>
+    <MyChartForFive
+      v-else-if="selectedChart === 3"
+      :city="cityCurrent"
+      :country="countryCurrentId"
+    />
   </div>
 
   <Modal :open="isOpen" @close="isOpen = !isOpen">
@@ -316,8 +320,6 @@ onMounted(() => {
 .addCityBlock {
   display: flex;
   flex-direction: row;
-  /* justify-content: space-around; */
-
   gap: 15px;
 }
 
