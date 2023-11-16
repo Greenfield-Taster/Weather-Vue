@@ -150,6 +150,7 @@ import MyChartForFive from "./ChartForecastFive.vue";
 import Modal from "./Modal.vue";
 import Preloader from "./Preloader.vue";
 import { useRouter } from "vue-router";
+// LOCATION_TOKEN, OPENWEATHERMAP_TOREN
 
 const cityCurrent = ref("");
 const countryCurrent = ref("");
@@ -191,7 +192,7 @@ const getLocation = () => {
 const showPosition = (position) => {
   latitude.value = position.coords.latitude;
   longitude.value = position.coords.longitude;
-  // const apiKey = "pk.dfc77c3e733a06fba2855876c491f105";
+  // const apiKeyLocation = process.env.LOCATION_TOKEN;
   axios
     .get(
       `https://us1.locationiq.com/v1/reverse?lat=${latitude.value}&lon=${longitude.value}&format=json&key=pk.dfc77c3e733a06fba2855876c491f105`
@@ -308,6 +309,8 @@ onMounted(() => {
   console.log("Cities in storage", storedCities.value);
 
   getAllCities();
+
+  console.log(process.env.LOCATION_TOKEN);
 });
 </script>
 <style scoped>
