@@ -196,7 +196,7 @@ const showPosition = (position) => {
   longitude.value = position.coords.longitude;
   axios
     .get(
-      `https://us1.locationiq.com/v1/reverse?lat=${latitude.value}&lon=${longitude.value}&format=json&key=${keyLocation}`
+      `https://us1.locationiq.com/v1/reverse?lat=${latitude.value}&lon=${longitude.value}&format=json&key=pk.dfc77c3e733a06fba2855876c491f105`
     )
     .then((response) => {
       cityCurrent.value = response.data.address.city;
@@ -289,7 +289,6 @@ const selectCityCheck = () => {
   if (selectedCity.value === "") {
     showError.value = true;
   } else {
-    // <router-link v-bind:to="'/weather-info/' + selectedCity">
     router.push("/weather-info/" + selectedCity.value);
   }
 };
@@ -297,7 +296,6 @@ const inputCityCheck = () => {
   if (cityInput.value === "") {
     showError.value = true;
   } else {
-    // <router-link v-bind:to="'/weather-info/' + selectedCity">
     router.push("/weather-info/" + cityInput.value);
   }
 };
@@ -310,7 +308,7 @@ onMounted(() => {
   console.log("Cities in storage", storedCities.value);
 
   getAllCities();
-  console.log(keyLocation, keyOpenweather);
+  console.log(keyLocation);
 });
 </script>
 <style scoped>
