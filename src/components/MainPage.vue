@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <div class="addCityBlock">
+    <div :class="{ errorForm: showError, addCityBlock: true }">
       <table>
         <thead>
           <tr>
@@ -32,11 +32,11 @@
                 </div>
                 <div class="typeCityAction">
                   <div class="buttonCheck">
-                    <router-link v-bind:to="'/weather-info/' + cityInput">
-                      <button class="action" @click="selectCity">
-                        Check weather
-                      </button>
-                    </router-link>
+                    <button class="action" @click="inputCityCheck()">
+                      Check weather
+                    </button>
+                    <!-- <router-link v-bind:to="'/weather-info/' + cityInput">
+                    </router-link> -->
                   </div>
                   <button class="action buttonAdd" @click="addCity(cityInput)">
                     Add
@@ -52,15 +52,18 @@
                     {{ city }}
                   </option>
                 </select>
-                <router-link v-bind:to="'/weather-info/' + selectedCity">
-                  <button class="action" @click="selectCity">
-                    Select city
-                  </button>
-                </router-link>
+                <button class="action" @click="selectCityCheck()">
+                  Select city
+                </button>
+                <!-- <router-link v-bind:to="'/weather-info/' + selectedCity">
+                </router-link> -->
               </div>
             </td>
           </tr>
         </tbody>
+        <div v-if="showError" class="errorMessage">
+          Please enter a valid City
+        </div>
       </table>
     </div>
     <div class="navigationButtons">
@@ -155,6 +158,7 @@ import axios from "axios";
 import MyChart from "./Chart.vue";
 import MyChartForFive from "./ChartForecastFive.vue";
 import Modal from "./Modal.vue";
+import { useRouter } from "vue-router";
 
 const cityCurrent = ref("");
 const countryCurrent = ref("");
@@ -168,6 +172,8 @@ const citiesList = ref([]);
 const showSuggestions = ref(false);
 const storedCities = ref("");
 const isOpen = ref(false);
+const showError = ref(false);
+const router = useRouter();
 
 const selectedChart = ref(1);
 
@@ -282,6 +288,23 @@ const deleteCity = (city) => {
 
 const showChart = (chartNumber) => {
   selectedChart.value = chartNumber;
+};
+
+const selectCityCheck = () => {
+  if (selectedCity.value === "") {
+    showError.value = true;
+  } else {
+    // <router-link v-bind:to="'/weather-info/' + selectedCity">
+    router.push("/weather-info/" + selectedCity.value);
+  }
+};
+const inputCityCheck = () => {
+  if (cityInput.value === "") {
+    showError.value = true;
+  } else {
+    // <router-link v-bind:to="'/weather-info/' + selectedCity">
+    router.push("/weather-info/" + cityInput.value);
+  }
 };
 onMounted(() => {
   getLocation();
@@ -421,15 +444,15 @@ table p {
   font-weight: bold;
   font-size: 25px;
 }
-.addCityBlockError {
+/* .addCityBlockError {
   display: flex;
-  background-color: rgba(169, 169, 169, 0.5);
+  
   width: 60%;
   height: auto;
   border-radius: 10px;
   padding: 20px 10px;
   border-color: red;
-}
+} */
 .wrapperModal {
   max-width: 400px;
   margin: 20px auto;
@@ -461,6 +484,13 @@ li {
 
 li:last-child {
   border-bottom: none;
+}
+.errorForm {
+  border: 1px solid red;
+  background-color: rgba(221, 157, 157, 0.5);
+}
+.errorMessage {
+  color: red;
 }
 @media (max-width: 800px) {
   #app {
