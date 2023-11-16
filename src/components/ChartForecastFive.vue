@@ -115,9 +115,9 @@ onMounted(() => {
   border-radius: 10px;
   padding: 10px 0;
 }
-canvas {
+/* canvas {
   display: flex;
   width: 500px;
   height: auto;
-}
+} */
 </style>

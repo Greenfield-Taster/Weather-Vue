@@ -101,8 +101,8 @@ onMounted(() => {
 <style scoped>
 .back {
   display: flex;
-  flex-direction: row;
-  justify-content: space-around;
+  /* flex-direction: row;
+  justify-content: space-around; */
 
   background-color: rgba(0, 0, 0, 0.8);
   width: 100%;
@@ -110,8 +110,8 @@ onMounted(() => {
   border-radius: 10px;
   padding: 10px 0;
 }
-canvas {
+/* canvas {
   width: 100%;
   height: auto;
-}
+} */
 </style>

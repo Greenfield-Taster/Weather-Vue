@@ -483,10 +483,13 @@ li:last-child {
   #app {
     padding-right: 5px;
   }
-  .addCityBlock {
+  .addCityBlockWrapper {
     width: 100%;
-    justify-content: center;
-    align-items: center;
+  }
+}
+@media (max-width: 830px) {
+  .addCityBlock {
+    flex-direction: column;
   }
 }
 @media (max-width: 450px) {
@@ -522,6 +525,9 @@ li:last-child {
   }
   #app {
     padding: 0;
+  }
+  .currentWeatherTable {
+    width: 100%;
   }
 }
 </style>
