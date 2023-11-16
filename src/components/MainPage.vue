@@ -1,70 +1,55 @@
 <template>
   <div class="wrapper">
-    <div :class="{ errorForm: showError, addCityBlock: true }">
-      <table>
-        <thead>
-          <tr>
-            <td><p>Type city</p></td>
-            <td><p>Select city</p></td>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>
-              <div class="inputCity">
-                <div class="input-container">
-                  <input
-                    class="input-field"
-                    v-model="cityInput"
-                    @input="onInput"
-                    placeholder="type city"
-                  />
-                  <img @click="clearInput" src="../assets/iconsCancel.png" />
-                  <ul v-if="showSuggestions">
-                    <li
-                      v-for="city in filtredCities"
-                      :key="city"
-                      @mousedown="selectFiltredCity(city)"
-                    >
-                      {{ city }}
-                    </li>
-                  </ul>
-                </div>
-                <div class="typeCityAction">
-                  <div class="buttonCheck">
-                    <button class="action" @click="inputCityCheck()">
-                      Check weather
-                    </button>
-                    <!-- <router-link v-bind:to="'/weather-info/' + cityInput">
-                    </router-link> -->
-                  </div>
-                  <button class="action buttonAdd" @click="addCity(cityInput)">
-                    Add
-                  </button>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="selectedCity">
-                <select v-model="selectedCity">
-                  <option value="" disabled>Select city</option>
-                  <option v-for="(city, index) in cities" :key="index">
-                    {{ city }}
-                  </option>
-                </select>
-                <button class="action" @click="selectCityCheck()">
-                  Select city
-                </button>
-                <!-- <router-link v-bind:to="'/weather-info/' + selectedCity">
-                </router-link> -->
-              </div>
-            </td>
-          </tr>
-        </tbody>
-        <div v-if="showError" class="errorMessage">
-          Please enter a valid City
+    <div :class="{ errorForm: showError, addCityBlockWrapper: true }">
+      <div class="addCityBlock">
+        <div class="inputCity">
+          <div class="mainText">
+            <h2>Type city</h2>
+          </div>
+          <div class="input-container">
+            <input
+              class="input-field"
+              v-model="cityInput"
+              @input="onInput"
+              placeholder="type city"
+            />
+            <img @click="clearInput" src="../assets/iconsCancel.png" />
+            <ul v-if="showSuggestions">
+              <li
+                v-for="city in filtredCities"
+                :key="city"
+                @mousedown="selectFiltredCity(city)"
+              >
+                {{ city }}
+              </li>
+            </ul>
+          </div>
+          <div class="typeCityAction">
+            <div class="buttonCheck">
+              <button class="action" @click="inputCityCheck()">
+                Check weather
+              </button>
+            </div>
+            <button class="action buttonAdd" @click="addCity(cityInput)">
+              Add
+            </button>
+          </div>
         </div>
-      </table>
+        <div class="selectedCity">
+          <div class="mainText">
+            <h2>Select city</h2>
+          </div>
+          <select v-model="selectedCity">
+            <option value="" disabled>Select city</option>
+            <option v-for="(city, index) in cities" :key="index">
+              {{ city }}
+            </option>
+          </select>
+          <button class="action" @click="selectCityCheck()">Select city</button>
+        </div>
+      </div>
+
+      <div v-if="showError" class="errorMessage">Please enter a valid city</div>
     </div>
     <div class="navigationButtons">
       <button @click="showChart(1)">Table</button>
@@ -318,16 +303,22 @@ onMounted(() => {
 });
 </script>
 <style scoped>
-.addCityBlock {
+.addCityBlockWrapper {
   display: flex;
-  /* flex-direction: row; */
-  /* justify-content: space-around; */
-
+  flex-direction: column;
   background-color: rgba(169, 169, 169, 0.5);
   width: 60%;
   height: auto;
   border-radius: 10px;
   padding: 20px 10px;
+  gap: 10px;
+}
+.addCityBlock {
+  display: flex;
+  flex-direction: row;
+  /* justify-content: space-around; */
+
+  gap: 15px;
 }
 
 .inputCity {
@@ -444,15 +435,6 @@ table p {
   font-weight: bold;
   font-size: 25px;
 }
-/* .addCityBlockError {
-  display: flex;
-  
-  width: 60%;
-  height: auto;
-  border-radius: 10px;
-  padding: 20px 10px;
-  border-color: red;
-} */
 .wrapperModal {
   max-width: 400px;
   margin: 20px auto;
@@ -491,6 +473,11 @@ li:last-child {
 }
 .errorMessage {
   color: red;
+  text-align: center;
+}
+.mainText h2 {
+  text-align: center;
+  color: #fff;
 }
 @media (max-width: 800px) {
   #app {

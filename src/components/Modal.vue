@@ -43,7 +43,7 @@ const props = defineProps({ open: Boolean, required: true });
 
 .vue-modal-content {
   position: relative;
-  background-color: #fff;
+  background-color: rgba(29, 28, 28, 0.9);
   border: 1px solid rgba(0, 0, 0, 0.3);
   background-clip: padding-box;
   border-radius: 0.3rem;
