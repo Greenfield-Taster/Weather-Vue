@@ -1,8 +1,9 @@
-
 # Weather
 
-This site has been created for easy weather checking in any city around the world. The site features two charts: the first displays the weather forecast for today, while the second shows the forecast for the next five days.
-
+- Weather portal is a Vue SPA which explores real-time weather updates for any city.
+- It is using Open Weather Map API as a data source.
+- Your local weather, determined by your IP address.
+- Temperature represents as charts using Vue Charts.
 
 ## API Reference
 
@@ -29,10 +30,7 @@ This site has been created for easy weather checking in any city around the worl
 | `country`      | `string` |Name of country |
 | `api_key` | `string` | **Required**. Your API key |
 
-
-
 ## Screenshots
 
 ### Home page
 ![main page](https://github.com/Greenfield-Taster/Weather-Vue/blob/main/src/assets/screenshots/mainPage.png?raw=true)
-
